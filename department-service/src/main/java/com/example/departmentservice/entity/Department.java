@@ -1,5 +1,6 @@
 package com.example.departmentservice.entity;
 
+import com.example.departmentservice.dto.DepartmentDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,11 @@ public class Department {
     private String departmentName;
     private String departmentDescription;
     private String departmentCode;
+
+    public Department(DepartmentDto departmentDto){
+        this.departmentName = departmentDto.departmentName();
+        this.departmentDescription = departmentDto.departmentDescription();
+        this.departmentCode = departmentDto.departmentCode();
+    }
 
 }
