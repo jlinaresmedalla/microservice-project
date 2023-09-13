@@ -22,11 +22,13 @@ public class Employee {
     private String lastName;
     @Column(unique=true, nullable=false)
     private String email;
+    private Long departmentId;
 
     public Employee(EmployeeDto employeeDto) {
         this.firstName = employeeDto.firstName();
         this.lastName = employeeDto.lastName();
         this.email = employeeDto.email();
+        this.departmentId = employeeDto.departmentId();
     }
 
 }

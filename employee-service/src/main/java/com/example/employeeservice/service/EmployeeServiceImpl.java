@@ -1,5 +1,7 @@
 package com.example.employeeservice.service;
 
+import com.example.employeeservice.dto.APIresponseDto;
+import com.example.employeeservice.dto.DepartmentDto;
 import com.example.employeeservice.dto.EmployeeDto;
 import com.example.employeeservice.entity.Employee;
 import com.example.employeeservice.exception.ResourceNotFoundException;
@@ -14,6 +16,7 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService{
 
     private EmployeeRepository employeeRepository;
+    private APIClient apiClient;
 
     @Override
     public void createEmployee(EmployeeDto employeeDto) {
@@ -28,13 +31,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public EmployeeDto getEmployee(Long id) {
+    public APIresponseDto getEmployee(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Employee", "id", id));
-        if(employee != null){
-            return new EmployeeDto(employee);
-        }
-        return null;
+        DepartmentDto departmentDto = apiClient.getDepartmentById(employee.getDepartmentId());
+        return new APIresponseDto(new EmployeeDto(employee), departmentDto);
     }
 
     @Override

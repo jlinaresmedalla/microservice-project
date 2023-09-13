@@ -7,9 +7,10 @@ public record EmployeeDto(
         Long id,
         String firstName,
         String lastName,
-        String email) {
+        String email,
+        Long departmentId) {
 
     public EmployeeDto(Employee employee) {
-        this(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail());
+        this(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getDepartmentId());
     }
 }
