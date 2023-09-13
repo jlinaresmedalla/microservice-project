@@ -2,6 +2,7 @@ package com.example.departmentservice.service;
 
 import com.example.departmentservice.dto.DepartmentDto;
 import com.example.departmentservice.entity.Department;
+import com.example.departmentservice.exception.ResourceNotFoundException;
 import com.example.departmentservice.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public DepartmentDto getDepartmentById(Long departmentId) {
-        Department department = departmentRepository.findById(departmentId).get();
+        Department department = departmentRepository.findById(departmentId).orElseThrow(
+                () -> new ResourceNotFoundException("Department", "departmentId", departmentId));
         return new DepartmentDto(department);
     }
 
@@ -35,7 +37,8 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public void updateDepartment(Long departmentId, DepartmentDto departmentDto) {
-        Department department = departmentRepository.findById(departmentId).get();
+        Department department = departmentRepository.findById(departmentId).orElseThrow(
+                () -> new ResourceNotFoundException("Department", "departmentId", departmentId));
         department.setDepartmentName(departmentDto.departmentName());
         department.setDepartmentDescription(departmentDto.departmentDescription());
         department.setDepartmentCode(departmentDto.departmentCode());
@@ -44,6 +47,8 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Override
     public void deleteDepartmentById(Long departmentId) {
+        Department department = departmentRepository.findById(departmentId).orElseThrow(
+                () -> new ResourceNotFoundException("Department", "departmentId", departmentId));
         departmentRepository.deleteById(departmentId);
     }
 }

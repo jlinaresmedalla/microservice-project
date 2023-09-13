@@ -2,6 +2,7 @@ package com.example.employeeservice.service;
 
 import com.example.employeeservice.dto.EmployeeDto;
 import com.example.employeeservice.entity.Employee;
+import com.example.employeeservice.exception.ResourceNotFoundException;
 import com.example.employeeservice.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public EmployeeDto getEmployee(Long id) {
-        Employee employee = employeeRepository.findById(id).orElse(null);
+        Employee employee = employeeRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Employee", "id", id));
         if(employee != null){
             return new EmployeeDto(employee);
         }
@@ -37,7 +39,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public void updateEmployee(Long id, EmployeeDto employeeDto) {
-        Employee employee = employeeRepository.findById(id).orElse(null);
+        Employee employee = employeeRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Employee", "id", id));
         if(employee != null){
             employee.setFirstName(employeeDto.firstName());
             employee.setLastName(employeeDto.lastName());
@@ -48,7 +51,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public void deleteEmployee(Long id) {
-        Employee employee = employeeRepository.findById(id).orElse(null);
+        Employee employee = employeeRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Employee", "id", id));
         if(employee != null){
             employeeRepository.delete(employee);
         }
