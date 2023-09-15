@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/department")
 public class DepartmentController {
 
     private DepartmentService departmentService;

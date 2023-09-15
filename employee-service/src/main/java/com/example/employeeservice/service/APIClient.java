@@ -9,7 +9,7 @@ import com.example.employeeservice.dto.DepartmentDto;
 @FeignClient(name = "DEPARTMENT-SERVICE") // Load balancer embeded will be used to call the service
 public interface APIClient {
 
-    @GetMapping("/{id}")
+    @GetMapping("/department/{id}")
     DepartmentDto getDepartmentById(@PathVariable Long id);
 
 }
